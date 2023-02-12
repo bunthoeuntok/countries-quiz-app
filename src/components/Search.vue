@@ -16,6 +16,7 @@ defineEmits(['update:modelValue'])
     <input
       type="text"
       :value="props.modelValue"
+      autofocus
       @input="$emit('update:modelValue', $event.target.value)"
       class="h-10 pl-10 py-2 rounded-md focus:outline-none focus-within:bg-gray-100"
       placeholder="Search..."

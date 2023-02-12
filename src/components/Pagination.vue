@@ -18,9 +18,10 @@ defineEmits(['currentPageChange'])
       v-for="pageNumber in totalPage"
       :key="pageNumber"
       :class="[
-        'bg-gray-200 px-4 py-2 text-sm rounded-md',
+        'bg-gray-200 px-4 py-2 text-sm rounded-md disabled:cursor-not-allowed',
         pageNumber === currentPage ? 'bg-gray-400' : '',
       ]"
+      :disabled="pageNumber === currentPage"
       @click="$emit('currentPageChange', pageNumber)"
     >
       {{ pageNumber }}

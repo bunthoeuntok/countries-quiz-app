@@ -43,27 +43,27 @@ const toggleModal = () => (show.value = !show.value)
         <div class="grid md:grid-cols-2 grid-cols-1 gap-6">
           <img :src="country.flags.png" class="w-full rounded-lg" alt="" />
           <div class="space-y-2">
-            <div class="grid grid-cols-2 gap-2">
+            <div class="grid grid-cols-2 border-b border-gray-300 gap-2">
               <p>Country Name:</p>
               <p class="font-bold">{{ country.name.official }}</p>
             </div>
-            <div class="grid grid-cols-2 gap-2">
+            <div class="grid grid-cols-2 border-b border-gray-300 gap-2">
               <p>CCA2:</p>
               <p>{{ country.cca2 }}</p>
             </div>
-            <div class="grid grid-cols-2 gap-2">
+            <div class="grid grid-cols-2 border-b border-gray-300 gap-2">
               <p>CCA3:</p>
               <p>{{ country.cca3 }}</p>
             </div>
-            <div class="grid grid-cols-2 gap-2">
+            <div class="grid grid-cols-2 border-b border-gray-300 gap-2">
               <p>Native Name:</p>
               <p>{{ getNativeName(country.name.nativeName) }}</p>
             </div>
-            <div class="grid grid-cols-2 gap-2">
+            <div class="grid grid-cols-2 border-b border-gray-300 gap-2">
               <p>Alternative Name:</p>
               <p v-html="country.altSpellings.join('<br />')"></p>
             </div>
-            <div class="grid grid-cols-2 gap-2">
+            <div class="grid grid-cols-2 border-b border-gray-300 gap-2">
               <p>Calling codes:</p>
               <p>{{ getIdd(country.idd) }}</p>
             </div>
