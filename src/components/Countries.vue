@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 import { useCountries } from '../composables/useCountries'
 import CountryModal from '../components/CountryModal.vue'
 import Search from '../components/Search.vue'
+import Pagination from '../components/Pagination.vue'
 import Fuse from 'fuse.js'
 
 const { countries, getNativeName, getIdd } = useCountries()
@@ -43,7 +44,7 @@ const paginate = data => {
   return data.filter((item, index) => index >= minIndex && index <= maxIndex)
 }
 
-const goToPage = page => (currentPage.value = page)
+const goToPage = pageNumber => (currentPage.value = pageNumber)
 
 const results = computed(() => {
   let filtered = searchCountries()
@@ -122,18 +123,10 @@ const results = computed(() => {
       </tbody>
     </table>
 
-    <div v-if="totalPage > 0" class="flex space-x-1 justify-end mt-4">
-      <button
-        :class="[
-          'bg-gray-200 px-4 py-2 text-sm rounded-md',
-          index === currentPage ? 'bg-gray-400' : '',
-        ]"
-        v-for="index in totalPage"
-        :key="index"
-        @click="goToPage(index)"
-      >
-        {{ index }}
-      </button>
-    </div>
+    <Pagination
+      @current-page-change="goToPage"
+      :total-page="totalPage"
+      :current-page="currentPage"
+    />
   </div>
 </template>
