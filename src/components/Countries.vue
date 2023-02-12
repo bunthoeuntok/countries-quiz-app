@@ -4,17 +4,13 @@ import { useCountries } from '../composables/useCountries'
 import CountryModal from '../components/CountryModal.vue'
 import Fuse from 'fuse.js'
 
-const countries = useCountries()
+const { countries, getNativeName, getIdd } = useCountries()
 const isAsc = ref(true)
 const search = ref('')
 const currentPage = ref(1)
 const totalPage = ref(0)
 
 const searchCountries = () => {
-  // return countries.value.filter(country =>
-  //   country.name.official.toLowerCase().includes(search.value.toLowerCase())
-  // )
-
   const options = { keys: ['name.official'], threshold: 0.4 }
   const fuse = new Fuse(countries.value, options)
 
@@ -36,19 +32,6 @@ const sortContries = data => {
     }
     return 0
   })
-}
-
-const getIdd = idd => {
-  if (Object.keys(idd).length) {
-    return idd.suffixes.map(suffix => idd.root + suffix).join(', ')
-  }
-}
-
-const getNativeName = nativeName => {
-  if (nativeName) {
-    let key = Object.keys(nativeName)[0]
-    return nativeName[key].official
-  }
 }
 
 const paginate = data => {

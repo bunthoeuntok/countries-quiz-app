@@ -1,28 +1,15 @@
 <script setup>
 import { ref } from 'vue'
+import { useCountries } from '../composables/useCountries'
 
 const show = ref(false)
+const { getNativeName, getIdd } = useCountries()
 const { country } = defineProps({
   country: {
     type: Object,
     reuqired: true,
   },
 })
-
-const getIdd = idd => {
-  if (Object.keys(idd).length) {
-    return idd.suffixes.map(suffix => idd.root + suffix).join(', ')
-  }
-  return 'N/A '
-}
-
-const getNativeName = nativeName => {
-  if (nativeName) {
-    let key = Object.keys(nativeName)[0]
-    return nativeName[key].official
-  }
-  return 'N/A'
-}
 
 const toggleModal = () => (show.value = !show.value)
 </script>

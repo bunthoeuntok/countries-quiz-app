@@ -16,6 +16,21 @@ export function useCountries() {
       })
   }
 
+  const getNativeName = nativeName => {
+    if (nativeName) {
+      let key = Object.keys(nativeName)[0]
+      return nativeName[key].official
+    }
+    return 'N/A'
+  }
+
+  const getIdd = idd => {
+    if (Object.keys(idd).length) {
+      return idd.suffixes.map(suffix => idd.root + suffix).join(', ')
+    }
+    return 'N/A '
+  }
+
   // get countries if exist in local storate
   let value = getCountries()
 
@@ -26,5 +41,5 @@ export function useCountries() {
   }
   // assign value to countries ref
   const countries = ref(value)
-  return countries
+  return { countries, getNativeName, getIdd }
 }
