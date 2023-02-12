@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import { useCountries } from '../composables/useCountries'
 import CountryModal from '../components/CountryModal.vue'
+import Fuse from 'fuse.js'
 
 const countries = useCountries()
 const isAsc = ref(true)
@@ -10,9 +11,18 @@ const currentPage = ref(1)
 const totalPage = ref(0)
 
 const searchCountries = () => {
-  return countries.value.filter(country =>
-    country.name.official.toLowerCase().includes(search.value.toLowerCase())
-  )
+  // return countries.value.filter(country =>
+  //   country.name.official.toLowerCase().includes(search.value.toLowerCase())
+  // )
+
+  const options = { keys: ['name.official'], threshold: 0.4 }
+  const fuse = new Fuse(countries.value, options)
+
+  const results = fuse.search(search.value)
+
+  return search.value === ''
+    ? countries.value
+    : results.map(result => result.item)
 }
 
 const toggleSort = () => (isAsc.value = !isAsc.value)
@@ -53,6 +63,7 @@ const goToPage = page => (currentPage.value = page)
 
 const results = computed(() => {
   let filtered = searchCountries()
+
   let sortedResults = sortContries(filtered)
 
   return paginate(sortedResults)
@@ -150,8 +161,16 @@ const results = computed(() => {
       </tbody>
     </table>
 
-    <div v-if="totalPage > 0">
-      <button v-for="index in totalPage" :key="index" @click="goToPage(index)">
+    <div v-if="totalPage > 0" class="flex space-x-1 justify-end mt-4">
+      <button
+        :class="[
+          'bg-gray-200 px-4 py-2 text-sm rounded-md',
+          index === currentPage ? 'bg-gray-400' : '',
+        ]"
+        v-for="index in totalPage"
+        :key="index"
+        @click="goToPage(index)"
+      >
         {{ index }}
       </button>
     </div>
