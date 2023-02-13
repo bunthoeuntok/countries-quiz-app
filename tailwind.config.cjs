@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        futura: ['Futura', 'Battambang'],
+        futura: ['Futura', 'Roboto', 'Battambang'],
       },
     },
   },
